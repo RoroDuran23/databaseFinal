@@ -76,5 +76,26 @@ CREATE TABLE Shops (
     isOpen BIT,
 
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
-)
+);
+
+-- Making these views
+
+-- Rides by Year view
+CREATE VIEW [Rides by Year] AS
+SELECT rideName, rideType, rideOpeningYear
+FROM Rides
+ORDER BY rideOpeningYear;
+
+-- Rides by section
+CREATE VIEW [Rides by Section] AS
+SELECT rideName, rideType, sectionName, parkName
+FROM Parks LEFT JOIN Sections S on Parks.parkID = S.parkID LEFT JOIN Rides R on S.sectionID = R.sectionID
+GROUP BY parkName;
+
+
+-- Sort open shops by price
+SELECT shopName, avgPrice, minPrice, maxPrice
+FROM Shops
+WHERE isOpen = 1
+ORDER BY avgPrice ASC;
 
