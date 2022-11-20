@@ -1,4 +1,4 @@
-# databaseFinal
+# Database Management Final Project
 
 
 This repo contains all the files used to create our database project.
