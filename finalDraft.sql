@@ -99,3 +99,10 @@ FROM Shops
 WHERE isOpen = 1
 ORDER BY avgPrice ASC;
 
+
+-- Add records
+INSERT INTO Parks(parkID, locationID, parkName, parksize, parkCapacity, numSectors, isOpen)
+VALUES (1, 1, 'Disneyland', 100, 85000, 9, 1);
+
+INSERT INTO Sections(sectionID, parkID, sectionName, sectionColorTheme, numAttractions)
+VALUES (1, 1, 'Main Street, U.S.A.', 'Bright Lights', 1);
