@@ -30,7 +30,12 @@ This repo contains all the files used to create our database project.
 
 ## References
 
-*
+* https://www.geeksforgeeks.org/composite-key-in-sql/
+* https://www.jetbrains.com/help/datagrip/tables-create-and-delete.html#create-a-table
+* https://touringplans.com/disneyland/overview
+* https://www.arestravel.com/big-walt-disney-world-compared-disneyland/
+* https://www.wdwinfo.com/disneyland-california/disneyland-adventureland.htm
+* 
 
 ## Known Errors
 
