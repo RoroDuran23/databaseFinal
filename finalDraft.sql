@@ -2,7 +2,7 @@ CREATE TABLE Parks (
     parkID INT PRIMARY KEY,
     locationID INT,
     parkName VARCHAR(100),
-    parksize INT,
+    parksize INT, --in acres
     parkCapacity INT,
     numSectors INT,
     isOpen BIT,
@@ -11,14 +11,17 @@ CREATE TABLE Parks (
 );
 
 CREATE TABLE Sections (
-    sectionID INT PRIMARY KEY,
+    sectionID INT,
     parkID INT,
     sectionName VARCHAR(100),
     sectionColorTheme VARCHAR(100),
     numAttractions INT,
 
+    PRIMARY KEY (sectionID, parkID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID)
 );
+
+DROP TABLE Sections;
 
 CREATE TABLE Location (
     locationID INT PRIMARY KEY,
@@ -78,6 +81,8 @@ CREATE TABLE Shops (
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
+
+
 -- Making these views
 
 -- Rides by Year view
@@ -101,8 +106,33 @@ ORDER BY avgPrice ASC;
 
 
 -- Add records
+-- PARKS --
+
+    --Disneyland
 INSERT INTO Parks(parkID, locationID, parkName, parksize, parkCapacity, numSectors, isOpen)
 VALUES (1, 1, 'Disneyland', 100, 85000, 9, 1);
 
+    --Disney World
+INSERT INTO Parks(parkID, locationID, parkName, parksize, parkCapacity, numSectors, isOpen)
+VALUES (2, 2, 'Disney World', 500, 320000, 6, 1);
+
+-- SECTIONS --
+
+    --Disneyland
 INSERT INTO Sections(sectionID, parkID, sectionName, sectionColorTheme, numAttractions)
 VALUES (1, 1, 'Main Street, U.S.A.', 'Bright Lights', 1);
+
+INSERT INTO Sections(sectionID, parkID, sectionName, sectionColorTheme, numAttractions)
+VALUES (2, 1, 'Adventureland', 'Jungle colors', 4);
+
+
+
+
+
+SELECT * FROM Parks;
+SELECT * FROM Sections;
+SELECT * FROM Rides;
+SELECT * FROM Location;
+SELECT * FROM Restaurants;
+SELECT * FROM Utilities;
+SELECT * FROM Shops;
