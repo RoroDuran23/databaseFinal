@@ -21,7 +21,8 @@ CREATE TABLE Sections (
     FOREIGN KEY (parkID) REFERENCES Parks(parkID)
 );
 
-DROP TABLE Sections;
+--if needed
+--DROP TABLE Sections;
 
 CREATE TABLE Location (
     locationID INT PRIMARY KEY,
@@ -31,8 +32,9 @@ CREATE TABLE Location (
 );
 
 CREATE TABLE Restaurants (
-    restID INT PRIMARY KEY,
+    restID INT,
     sectionID INT,
+    parkID INT,
     restName VARCHAR(100),
     restDescription VARCHAR(300),
     restTypeFood VARCHAR(100),
@@ -41,12 +43,18 @@ CREATE TABLE Restaurants (
     isFull BIT,
     waitTime TIME,
 
+    PRIMARY KEY (restID, sectionID, parkID),
+    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
+--if needed
+--DROP TABLE Restaurants;
+
 CREATE TABLE Rides (
-    rideID INT PRIMARY KEY,
+    rideID INT,
     sectionID INT,
+    parkID INT,
     rideName VARCHAR(100),
     rideType VARCHAR(100),
     rideDescription VARCHAR(300),
@@ -55,21 +63,34 @@ CREATE TABLE Rides (
     rideOpeningYear INT,
     waitTime DEC,
 
+    PRIMARY KEY (rideID, sectionID, parkID),
+    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
+--if needed
+DROP TABLE Rides;
+
 CREATE TABLE Utilities (
-    utilityName VARCHAR(100) PRIMARY KEY,
+    utilityID INT,
     sectionID INT,
+    parkID INT,
+    utilityName VARCHAR(100),
     description VARCHAR(300),
     isAvailable BIT,
 
+    PRIMARY KEY (utilityID, sectionID, parkID),
+    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
+--if needed
+--DROP TABLE Utilities;
+
 CREATE TABLE Shops (
-    shopID INT PRIMARY KEY,
+    shopID INT,
     sectionID INT,
+    parkID INT,
     shopType VARCHAR(100),
     shopName VARCHAR(100),
     maxPrice DEC,
@@ -78,8 +99,13 @@ CREATE TABLE Shops (
     numItems INT,
     isOpen BIT,
 
+    PRIMARY KEY (shopID, sectionID, parkID),
+    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
     FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
+
+--if needed
+--DROP TABLE Shops;
 
 
 
@@ -125,6 +151,21 @@ VALUES (1, 1, 'Main Street, U.S.A.', 'Bright Lights', 1);
 INSERT INTO Sections(sectionID, parkID, sectionName, sectionColorTheme, numAttractions)
 VALUES (2, 1, 'Adventureland', 'Jungle colors', 4);
 
+-- Shops --
+
+    --Disneyland
+INSERT INTO Shops(shopID, sectionID, parkID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES(1, 2, 1, "Tropical", "Adventureland Bazaar", 250, 3, 50, 100, 1);
+
+INSERT INTO Shops(shopID, sectionID, parkID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES(2, 2, 1, "BBQ", "South Seas Trader", 13, 4, 7, 15, 1);
+
+
+
+-- RESTAURANTS --
+    --Disneyland
+INSERT INTO Restaurants(restID, sectionID, parkID, restName, restDescription, restTypeFood, isOpen, maxCapacity, isFull, waitTime)
+VALUES(1, 2,1,"Bengal Barbecue", "Located across from the Jungle Cruise and Indiana Jones Adventure, this quick serve location features chicken and beef skewers topped with Polynisian-inspired sauces.", "BBQ", 1, 75, 0, 25);
 
 
 
