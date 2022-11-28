@@ -276,4 +276,16 @@ UPDATE Restaurants
 SET waitTime = 85
 WHERE Restaurants.restID = 14;
 
---6.
+--6. Make use of transactions (commit and rollback)
+
+--7. One query must perform an aggregation/group-by clause
+
+--8. One query must contain a sub-query
+
+--9. Two queries must involve joins across at least 3 tables
+
+--10. Enforce referential integrality (PK/FK Constraints)
+
+--11. Include Database Views, Indexes
+
+--12. Use at least 5 entities
