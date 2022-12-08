@@ -270,6 +270,9 @@ WHERE Restaurants.restID = 14;
 
 --6. Make use of transactions (commit and rollback)
 
+-- This is actually really easy, if we just have an undo button, just put commit after each add or update then commit can call:
+ROLLBACK;
+
 --7. One query must perform an aggregation/group-by clause
 
 --8. One query must contain a sub-query
