@@ -33,7 +33,7 @@ CREATE TABLE Location (
 
 CREATE TABLE Restaurants (
     restID INT,
-    parkID INT,
+    sectionID INT,
     restName VARCHAR(100),
     restDescription VARCHAR(300),
     restTypeFood VARCHAR(100),
@@ -44,7 +44,7 @@ CREATE TABLE Restaurants (
     waitTime TIME,
 
     PRIMARY KEY (restID),
-    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
+    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID),
 );
 
 --if needed
@@ -52,7 +52,7 @@ DROP TABLE Restaurants;
 
 CREATE TABLE Rides (
     rideID INT,
-    parkID INT,
+    sectionID INT,
     rideName VARCHAR(100),
     rideType VARCHAR(100),
     rideDescription VARCHAR(300),
@@ -62,7 +62,7 @@ CREATE TABLE Rides (
     waitTime DEC,
 
     PRIMARY KEY (rideID),
-    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
+    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID),
 );
 
 --if needed
@@ -70,13 +70,13 @@ DROP TABLE Rides;
 
 CREATE TABLE Utilities (
     utilityID INT,
-    parkID INT,
+    sectionID INT,
     utilityName VARCHAR(100),
     description VARCHAR(300),
     isAvailable BIT,
 
     PRIMARY KEY (utilityID),
-    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
+    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID),
 );
 
 --if needed
@@ -84,7 +84,7 @@ DROP TABLE Utilities;
 
 CREATE TABLE Shops (
     shopID INT,
-    parkID INT,
+    sectionID INT,
     shopType VARCHAR(100),
     shopName VARCHAR(100),
     maxPrice DEC,
@@ -94,7 +94,7 @@ CREATE TABLE Shops (
     isOpen BIT,
 
     PRIMARY KEY (shopID),
-    FOREIGN KEY (parkID) REFERENCES Parks(parkID),
+    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID),
 );
 
 --if needed
