@@ -17,7 +17,7 @@ CREATE TABLE Sections (
     sectionColorTheme VARCHAR(100),
     numAttractions INT,
 
-    PRIMARY KEY (sectionID, parkID),
+    PRIMARY KEY (sectionID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID)
 );
 
@@ -33,7 +33,6 @@ CREATE TABLE Location (
 
 CREATE TABLE Restaurants (
     restID INT,
-    sectionID INT,
     parkID INT,
     restName VARCHAR(100),
     restDescription VARCHAR(300),
@@ -46,7 +45,6 @@ CREATE TABLE Restaurants (
 
     PRIMARY KEY (restID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID),
-    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
 --if needed
@@ -54,7 +52,6 @@ DROP TABLE Restaurants;
 
 CREATE TABLE Rides (
     rideID INT,
-    sectionID INT,
     parkID INT,
     rideName VARCHAR(100),
     rideType VARCHAR(100),
@@ -66,7 +63,6 @@ CREATE TABLE Rides (
 
     PRIMARY KEY (rideID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID),
-    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
 --if needed
@@ -74,7 +70,6 @@ DROP TABLE Rides;
 
 CREATE TABLE Utilities (
     utilityID INT,
-    sectionID INT,
     parkID INT,
     utilityName VARCHAR(100),
     description VARCHAR(300),
@@ -82,7 +77,6 @@ CREATE TABLE Utilities (
 
     PRIMARY KEY (utilityID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID),
-    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
 --if needed
@@ -90,7 +84,6 @@ DROP TABLE Utilities;
 
 CREATE TABLE Shops (
     shopID INT,
-    sectionID INT,
     parkID INT,
     shopType VARCHAR(100),
     shopName VARCHAR(100),
@@ -102,7 +95,6 @@ CREATE TABLE Shops (
 
     PRIMARY KEY (shopID),
     FOREIGN KEY (parkID) REFERENCES Parks(parkID),
-    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
 );
 
 --if needed
