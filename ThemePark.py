@@ -17,11 +17,11 @@ def sql_executor(raw_code):
 
 ##city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
 
-parks = ['parkID, ', 'locationID, ', 'parkName, ', 'parksize, ', 'parkCapacity, ', 'numSectors, ', 'isOpen']
-sections = ['sectionID, ', 'parkID, ', 'sectionName, ', 'sectionColorTheme, ', 'numAttractions']
-location = ['locationID, ', 'locationName, ', 'locationState, ', 'locationCity']
-restaurants = ['restID, ', 'sectionID, ', 'restName, ', 'restDescription, ', 'restTypeFood, ', 'restTypeService, ', 'isOpen, ', 'maxCapacity, ', 'waitTime']
-rides = ['rideID, ', 'sectionID, ', 'rideName, ', 'rideType, ', 'rideDescription, ', 'rideMinHeight, ', 'rideOpeningYear, ', 'waitTime']
+parks = ['parkID', 'locationID', 'parkName', 'parksize', 'parkCapacity', 'numSectors', 'isOpen']
+sections = ['sectionID', 'parkID', 'sectionName', 'sectionColorTheme', 'numAttractions']
+location = ['locationID', 'locationName', 'locationState', 'locationCity']
+restaurants = ['restID', 'sectionID', 'restName', 'restDescription', 'restTypeFood', 'restTypeService', 'isOpen', 'maxCapacity', 'waitTime']
+rides = ['rideID', 'sectionID', 'rideName', 'rideType', 'rideDescription', 'rideMinHeight', 'rideOpeningYear', 'waitTime']
 
 
 def main():
