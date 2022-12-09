@@ -74,34 +74,50 @@ def add_restaurant(conn, project):
 
 
 # QUERY ALL DATA
-def select_all_accounts(conn):
+def select_all_accounts():
     """
     Query tasks by priority
     :param conn: the Connection object
     :param priority:
     :return:
     """
+    conn = create_connection(r"disney.sqlite")
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Sections")
+    cur.execute('''SELECT locationName, parkName, sectionName, rideName
+FROM Location LEFT JOIN Parks P on Location.locationID = P.locationID LEFT JOIN Sections S on P.parkID = S.parkID LEFT JOIN Rides R on S.sectionID = R.sectionID
+GROUP BY locationName;''')
 
     rows = cur.fetchall() # to get the data back into a list 
 
-    for row in rows:
-        print(row)
+    # for row in rows:
+    #     print(row)
+    
+    return rows
+
+def parksFilter():
+    conn = create_connection(r"disney.sqlite")
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT parkName FROM Parks")
+
+    rows = cur.fetchall() # to get the data back into a list 
+
+    # for row in rows:
+    #     print(row)
+    
+    return rows
 
 
+# def main():
+# 		# create connection to our sqlite db file 
+#     conn = create_connection(r"disney.sqlite")
 
-def main():
-		# create connection to our sqlite db file 
-    conn = create_connection(r"finalDraft.sql")
-
-    if conn:
-        try:
-            select_all_accounts(conn)
-            # result_df = pd.read_sql(select_all_accounts(conn), conn)`
-        finally:
-            conn.close()
-            print("connection closed")
+#     if conn:
+#         try:
+#             select_all_accounts(conn)
+#             # result_df = pd.read_sql(select_all_accounts(conn), conn)`
+#         finally:
+#             conn.close()
+#             print("connection closed")
         
 
 
