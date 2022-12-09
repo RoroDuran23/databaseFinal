@@ -253,8 +253,8 @@ INNER JOIN Parks P on P.parkID = Sections.parkID
 WHERE sectionID = 1 AND p.parkID = 1;
 
 --3. Create a new record
-INSERT INTO Restaurants(restID, sectionID, parkID, restName, restDescription, restTypeFood, isOpen, maxCapacity, isFull, waitTime)
-VALUES(2, 2,1,"Tiki Juice Bar", "You can get refreshing Dole pineapple juice or Dole Whip (soft serve ice cream) here. This is located at the entrance to the Tiki Room. During busier times, the Tiki Juice Bar becomes Mobile Order only. Dole Whips can also be found at Tropical Hideaway.", "BBQ", 1, 20, 0, 10);
+INSERT INTO Restaurants(restID, sectionID, restName, restDescription, restTypeFood, isOpen, maxCapacity, isFull, waitTime)
+VALUES(2, 2,"Tiki Juice Bar", "You can get refreshing Dole pineapple juice or Dole Whip (soft serve ice cream) here. This is located at the entrance to the Tiki Room. During busier times, the Tiki Juice Bar becomes Mobile Order only. Dole Whips can also be found at Tropical Hideaway.", "BBQ", 1, 20, 0, 10);
 
 --4. Delete records (soft delete function would be ideal)
 DELETE
