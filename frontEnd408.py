@@ -22,6 +22,7 @@ st.sidebar.header("Editing Menu")
 addStuff = st.sidebar.button("Add to database")
 delStuff = st.sidebar.button("Delete from database")
 modStuff = st.sidebar.button("Update database")
+rollBack = st.sidebar.button("Undo")
 
 # ----- MAIN PAGE -----
 st.title("Disney Dashboard")
