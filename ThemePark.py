@@ -4,7 +4,7 @@ import pandas as pd
 
 # DB Mgmt
 import sqlite3 
-conn = sqlite3.connect('FinalDraft.sql')
+conn = sqlite3.connect('data/disney2.sqlite')
 c = conn.cursor()
 
 
