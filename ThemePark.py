@@ -27,7 +27,7 @@ rides = ['rideID, ', 'sectionID, ', 'rideName, ', 'rideType, ', 'rideDescription
 def main():
 	st.title("Theme Park Manager")
 
-	menu = ["Home","About"]
+	menu = ["Home","Add Record", "Delete Record", "Edit Record", "Undo"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
 	if choice == "Home":
@@ -62,18 +62,20 @@ def main():
 					query_df = pd.DataFrame(query_results)
 					st.dataframe(query_df)
 
+	elif (choice == "Add Record"):
+	    st.subheader("Add Record")
 
-	else:
-		st.subheader("About")
+	elif (choice == "Delete Record"):
+		st.subheader("Delete Record")
+
+	elif (choice == "Edit Record"):
+		st.subheader("Edit Record")
+		
+	elif (choice == "Undo"):
+		st.subheader("Undo")
 
 
-# ------------ SIDEBAR -------------
 
-st.sidebar.header("Editing Menu")
-addStuff = st.sidebar.button("Add to database")
-delStuff = st.sidebar.button("Delete from database")
-modStuff = st.sidebar.button("Update database")
-rollBack = st.sidebar.button("Undo")
 
 
 if __name__ == '__main__':
