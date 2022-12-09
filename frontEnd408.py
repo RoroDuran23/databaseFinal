@@ -9,6 +9,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode
+import sqlconnector
 
 
 st.set_page_config(page_title="Disney Dashboard",
@@ -22,7 +23,6 @@ st.sidebar.header("Editing Menu")
 addStuff = st.sidebar.button("Add to database")
 delStuff = st.sidebar.button("Delete from database")
 modStuff = st.sidebar.button("Update database")
-rollBack = st.sidebar.button("Undo")
 
 # ----- MAIN PAGE -----
 st.title("Disney Dashboard")
@@ -82,18 +82,22 @@ with st.expander("Filter data"):
 
 st.write("Table here at some point smh")
 # ------------- DATAFRAME ---------
-data = pd.read_csv("main_Sections.csv", index_col=0)
-AgGrid(data)
+rows = sqlconnector.select_all_accounts()
+data = pd.DataFrame(rows)
+# df.columns = resoverall.keys()
+st.dataframe(data)
 # ---------------------------------
 
 if addStuff:
     st.write("Enter info below to add to table")
     col1, col2, col3 = st.columns(3)
+    s1, s2, s3 = "", "", ""
     with col1:
         s1 = st.text_input("Enter park")
     with col2:
         s2 = st.text_input("Enter section")
     with col3:
         s3 = st.text_input("Enter location")
+    
 
 
