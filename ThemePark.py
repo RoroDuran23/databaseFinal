@@ -4,7 +4,7 @@ import pandas as pd
 
 # DB Mgmt
 import sqlite3 
-conn = sqlite3.connect('data/world.sqlite')
+conn = sqlite3.connect('FinalDraft.sql')
 c = conn.cursor()
 
 
@@ -70,7 +70,7 @@ def main():
 
 	elif (choice == "Edit Record"):
 		st.subheader("Edit Record")
-		
+
 	elif (choice == "Undo"):
 		st.subheader("Undo")
 

@@ -4,6 +4,16 @@ DROP TABLE Location;
 DROP TABLE Restaurants;
 DROP TABLE Rides;
 DROP TABLE Utilities;
+DROP TABLE Shops;
+
+PRAGMA FOREIGN_KEYS = 1
+
+CREATE TABLE Location (
+    locationID INT PRIMARY KEY,
+    locationName VARCHAR(100),
+    locationState VARCHAR(100),
+    locationCity VARCHAR(100)
+);
 
 CREATE TABLE Parks (
     parkID INT PRIMARY KEY,
@@ -27,14 +37,6 @@ CREATE TABLE Sections (
     FOREIGN KEY (parkID) REFERENCES Parks(parkID)
 );
 
-
-CREATE TABLE Location (
-    locationID INT PRIMARY KEY,
-    locationName VARCHAR(100),
-    locationState VARCHAR(100),
-    locationCity VARCHAR(100)
-);
-
 CREATE TABLE Restaurants (
     restID INT PRIMARY KEY,
     sectionID INT,
@@ -46,7 +48,7 @@ CREATE TABLE Restaurants (
     maxCapacity INT,
     waitTime INT,
 
-    FOREIGN KEY (sectionID) REFERENCES Sections(sectionID)
+    FOREIGN KEY (sectionID) REFERENCES Sections(SectionID)
 );
 
 
@@ -102,8 +104,13 @@ ORDER BY rideOpeningYear;
 CREATE VIEW [Rides by Section] AS
 SELECT rideName, rideType, sectionName, parkName
 FROM Parks LEFT JOIN Sections S on Parks.parkID = S.parkID LEFT JOIN Rides R on S.sectionID = R.sectionID
-GROUP BY parkName;
+GROUP BY sectionName;
 
+
+CREATE VIEW [Rides by ] AS
+SELECT locationName, parkName, sectionName, rideName
+FROM Location LEFT JOIN Parks P on Location.locationID = P.locationID LEFT JOIN Sections S on P.parkID = S.parkID LEFT JOIN Rides R on S.sectionID = R.sectionID
+GROUP BY locationName;
 
 -- Sort open shops by price
 SELECT shopName, avgPrice, minPrice, maxPrice
@@ -117,6 +124,8 @@ ORDER BY avgPrice ASC;
 -- Location
 INSERT INTO Location(locationID, locationName, locationState, locationCity)
 VALUES (1, 'Disneyland Resort', 'California', 'Anaheim');
+INSERT INTO Location(locationID, locationName, locationState, locationCity)
+VALUES (2, 'Disney World Resort', 'Florida', 'Orlando');
 
 -- PARKS --
 
@@ -126,7 +135,7 @@ VALUES (1, 1, 'Disneyland', 100, 85000, 9, 1);
 
     --Disney World
 INSERT INTO Parks(parkID, locationID, parkName, parksize, parkCapacity, numSectors, isOpen)
-VALUES (2, 2, 'Disney World', 500, 320000, 6, 1);
+VALUES (2, 2, 'Magic Kingdom', 500, 320000, 6, 1);
 
 -- SECTIONS --
 
