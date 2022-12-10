@@ -35,6 +35,7 @@ This repo contains all the files used to create our database project.
 * https://touringplans.com/disneyland/overview
 * https://www.arestravel.com/big-walt-disney-world-compared-disneyland/
 * https://www.wdwinfo.com/disneyland-california/disneyland-adventureland.htm
+* https://www.geeksforgeeks.org/how-to-install-pip-in-macos/
 * 
 
 ## Known Errors
