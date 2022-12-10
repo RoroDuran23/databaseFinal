@@ -74,7 +74,9 @@ def main():
 				submitAddRide = st.form_submit_button(label='Add Ride')
 
 			if submitAddRide:
+				
 				## SQL SHIT HERE
+
 				st.success("You have added a ride")
 		with st.expander("Add Utility"):
 			with st.form(key='AddUtility', clear_on_submit=True):
@@ -87,7 +89,9 @@ def main():
 				submitAddUtility = st.form_submit_button(label='Add Ride')
 
 				if submitAddUtility:
+
 					#SQL SHIT
+					
 					st.success("Added Utility")
 
 		with st.expander("Add Restaurant"):
@@ -131,7 +135,9 @@ def main():
 				submitDelRide = st.form_submit_button(label='Delete Restaurant')
 
 				if submitDelRide:
+
 					# SQL SHIT HERE
+					
 					st.success("Ride Deleted")
 
 	elif (choice == "Edit Record"):
@@ -147,7 +153,9 @@ def main():
 				submitEditRide = st.form_submit_button(label='Edit Ride')
 
 			if submitEditRide:
+
 				## SQL SHIT HERE
+				
 				st.success("You have edited the ride")
 
 		with st.expander("Edit Utility"):
@@ -166,6 +174,7 @@ def main():
 
 		with st.expander("Edit Restaurant"):
 			with st.form(key='EditRestaurant', clear_on_submit=True):
+
 				editRestID = st.number_input("Edit ID", step = 0)
 				editRestSecID = st.number_input("Section ID", step = 0)
 				editRestName = st.text_input("Restaurant Name")
@@ -175,10 +184,13 @@ def main():
 				editIsOpen = st.checkbox("Is Open")
 				editMaxCapacity = st.number_input("Maximum Capacity", step = 0)
 				editWaitTime = st.number_input("Wait Time")
-				## SQL SHIT HERE
+				
 				submitEditRest = st.form_submit_button(label='Edit Restaurant')
 
 				if submitEditRest:
+
+					## SQL SHIT HERE
+
 					st.success("Added Restaurant")
 
 	elif (choice == "Version Control"):
