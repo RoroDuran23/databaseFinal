@@ -276,7 +276,35 @@ INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMi
     VALUES (9, 6, "Buzz Lightyear Astro Blasters", "Interactive game", "Board your Space Cruiser and blast your way through several scenes. Aim your weapon and shoot a beam of light at the alien targets while scoring points. The joystick lets you rotate your cruiser as you compete for the highest score", -1, 18, 2005, 45);
 
 
+-- Utilities --
 
+-- Disneyland --
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (1, 1, "Restrooms", "Located next to the Opera House", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (2, 2, "Information Center", "If you have any questions, there is an information kiosk next to Indiana Jones.", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (3,3, "Photo Center", "Come take a picture by the water! (Located 100 feet North of the Haunted Mansion)", 0);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (4,4, "Wild West'n", "Come take a picture her and relive the 1910s in Western America", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (5, 5, "Information Center", "If you have any questions, there is an information kiosk next to the Honda Autocenter.", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (6,6,"Restrooms", "Located next to the Food Court", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (7,7,"Brochures", "Don't forget to get your physical (or digital!) brochures! Located in front of Spalsh Mountain", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (8,8, "Fan Section", "Take awesome pictures with Stormtroopers or other Star Wars characters", 1);
+
+INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+    VALUES (9,9, "Meet Mickey", "Join Mickey and his friends for a memorable picture", 1);
 
 --DROP TABLE Parks;
 --DROP TABLE Sections;
