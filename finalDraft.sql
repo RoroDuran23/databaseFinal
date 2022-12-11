@@ -164,13 +164,35 @@ VALUES (9, 1, ' Mickeys Toontown', 'Multicolor', 1);
 -- Shops --
 
     --Disneyland
-INSERT INTO Shops(shopID, sectionID, parkID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
-VALUES(1, 2, 1, "Tropical", "Adventureland Bazaar", 250, 3, 50, 100, 1);
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES(1, 2, "Tropical", "Adventureland Bazaar", 250, 3, 50, 100, 1);
 
-INSERT INTO Shops(shopID, sectionID, parkID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
-VALUES(2, 2, 1, "BBQ", "South Seas Trader", 13, 4, 7, 15, 1);
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES(2, 2, "BBQ", "South Seas Trader", 13, 4, 7, 15, 1);
 
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (3, 1, "Music", "20th Century Music Company", 150, 23, 50, 80,1);
 
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (4, 3, "Home decorations", "Cristal d''Orleans", 100, 19, 60, 50, 0);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (5, 4, "Western souvenirs", "Pioneer Mercantile", 150, 5, 40, 250, 1);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (6, 5, "Princesses", "Fairy Tale Treasures", 130, 23, 40, 100, 1);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (7, 6, "Mainly hats", "Autopia Winner’s Circle", 45, 15, 30, 30, 0);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (8, 7, "Hats", "Briar Patch", 40, 20, 25, 30, 1);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (9, 8, "Droids", "Droid Depot", 350, 50, 120, 20, 1);
+
+INSERT INTO Shops(shopID, sectionID, shopType, shopName, maxPrice, minPrice, avgPrice, numItems, isOpen)
+VALUES (10, 9, "Themed shop", "Gag Factory/Toontown Five & Dime", 180, 10, 40, 100, 1);
 
 -- RESTAURANTS --
     --Disneyland
@@ -253,10 +275,6 @@ INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMi
 INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
     VALUES (9, 6, "Buzz Lightyear Astro Blasters", "Interactive game", "Board your Space Cruiser and blast your way through several scenes. Aim your weapon and shoot a beam of light at the alien targets while scoring points. The joystick lets you rotate your cruiser as you compete for the highest score", -1, 18, 2005, 45);
 
-
---SHOPS
-
---Disneyland
 
 
 
