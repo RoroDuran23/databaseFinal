@@ -223,14 +223,50 @@ INSERT INTO Restaurants(restID, sectionID, restName, restDescription, restTypeFo
 VALUES(16, 9,"Alien Pizza Planet", "This Toy Story-themed restaurant offers pizza, Caesar salad, and pasta. You can eat inside, or “outside” in a covered area.", "Pizza", "Cafeteria", 1, 100, 1, 20);
 
 
+-- RIDES --
 
-SELECT * FROM Parks;
-SELECT * FROM Sections;
-SELECT * FROM Rides;
-SELECT * FROM Location;
-SELECT * FROM Restaurants;
-SELECT * FROM Utilities;
-SELECT * FROM Shops;
+--Disneyland
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (1, 1, "Disneyland Railroad", "Train", "Hop on board an authentic steam train and ride around the park. There are stops in New Orleans Square, Mickey''s Toontown and Tomorrowland, as well as Main Street. ", -1, 5, 1955, 30);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES(2, 2, "Indiana Jones Adventure - Temple of the Forbidden Eye", "Car", "Following in Indiana Jones'' footsteps, you make your way through the jungles of Adventureland in search of the legendary Temple of the Forbidden Eye. Here you''ll find the curse of 'Mara', gaze upon her eye and a terrible fate awaits you.", 1.2, 15, 1995, 60);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (3, 7, "Splash Mountain", "Car; water", "A one mile water log flume ride that takes you on a journey through the backwoods, swamps, and bayous of the old South as you prepare for the final dramatic 52 1/2 feet (more than 5 stories), 47 degree angle & 40+ mph flume drop. ", 1.3, 16, 1989, 15);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (4, 5, "Peter Pan''s Flight", "indoor; car", "With a sprinkling of pixie dust, your pirate ship takes flight high above the streets of London and into Never Never Land.", -1, 5, 1955, 20);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (5, 4, "Sailing Ship Columbia", "boat", "Experience a full-circle cruise tour of the Rivers of America around Tom Sawyer Island aboard the first 3-masted windjammer to be built in the United States in over 100 years.", -1, 35, 1958, 0);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (6, 3, "Pirates of the Caribbean", "indoor; boat", "Guests board their pirate boat and travel through an audio-Animatronic pirate adventure. Watch as the pirates take over a Spanish fort and pillage and plunder the town.", -1, 20, 1967, 45 );
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (7, 8, "Millennium Falcon: Smugglers Run", "spaceship", "Guests can pilot one of the most famous starships in the galaxy in this interactive attraction that has guests creating their own adventures. Settle into the cockpit of the fastest hunk of junk in the galaxy and discover what surprises the bucket of bolts has to offer.", 38, 25, -1, 90);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (8, 9, "Goofy''s Playhouse", "Playground", "Kids enter Goofy''s yard and play, climb and slide to their heart''s content", -1, 10, 2008, 10);
+
+INSERT INTO Rides(rideID, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+    VALUES (9, 6, "Buzz Lightyear Astro Blasters", "Interactive game", "Board your Space Cruiser and blast your way through several scenes. Aim your weapon and shoot a beam of light at the alien targets while scoring points. The joystick lets you rotate your cruiser as you compete for the highest score", -1, 18, 2005, 45);
+
+
+--SHOPS
+
+--Disneyland
+
+
+
+--DROP TABLE Parks;
+--DROP TABLE Sections;
+--DROP TABLE Rides;
+--DROP TABLE Location;
+--DROP TABLE Restaurants;
+--DROP TABLE Utilities;
+--DROP TABLE Shops;
 
 
 -- Requirements
