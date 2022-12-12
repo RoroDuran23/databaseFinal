@@ -1,4 +1,6 @@
 # Core Pkgs
+from re import X
+from select import select
 import streamlit as st 
 import pandas as pd
 
@@ -8,12 +10,19 @@ conn = sqlite3.connect('data/disney2.sqlite')
 c = conn.cursor()
 
 
-# Fxn Make Execution
+
+
+# -------- QUERY EXECUTOR ----------------------------
 def sql_executor(raw_code):
 	c.execute(raw_code)
 	data = c.fetchall()
 	return data 
+# ----------------------------------------------------
 
+
+
+st.set_page_config(page_title="Disney Dashboard",
+                    layout="wide")
 
 ##city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
 
@@ -24,16 +33,94 @@ restaurants = ['restID', 'sectionID', 'restName', 'restDescription', 'restTypeFo
 rides = ['rideID', 'sectionID', 'rideName', 'rideType', 'rideDescription', 'rideMinHeight', 'rideOpeningYear', 'waitTime']
 utilities = ['utilityID', 'sectionID', 'utilityName', 'description', 'isAvailable']
 
+run = False # will run query based on our filters
 
 def main():
-	st.title("Theme Park Manager")
+	# -------- DEFAULT QUERY FOR MAIN TABLE --------------
+	defaultQ = '''SELECT restName, restTypeFood, parkName, maxCapacity, restDescription, waitTime FROM Parks
+						INNER JOIN Sections
+						ON Parks.locationID = Sections.sectionID
+						INNER JOIN  Restaurants
+						ON Sections.sectionID = Restaurants.sectionID;'''
+	# ----------------------------------------------------
+	st.title("Disney Park Manager")
 
-	menu = ["Query","Add Record", "Delete Record", "Edit Record", "Version Control"]
+	menu = ["Query","Common Views", "Add Record", "Delete Record", "Edit Record", "SQL Console", "Version Control"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
-	if choice == "Query":
-		st.subheader("HomePage")
 
+	
+	if choice == "Query":
+		st.subheader("Searching by Filters")
+		st.caption("This page is meant for easily navigating through the whole database using filters and straightforward options")
+
+		# ---- FILTERING DATA -------
+		with st.expander("Filter data"):
+			col1, col2, col3 = st.columns(3)
+			with col1:
+				parkFilter = st.multiselect(
+					"Park:",
+					options=["Disneyland", "Magic Kingdom"],
+					default = "Disneyland"
+				)
+				sectionFilter = st.multiselect(
+					"Section:",
+					options="M",
+					default = "M"
+				)
+				locationFilter = st.multiselect(
+					"Location:",
+					options="M",
+					default = "M"
+				)
+			with col2:
+				restaurantFilter = st.multiselect(
+					"Restaurant:",
+					options=["Gibson Girl Ice Cream Parlor", "Jolly Holiday Bakery Cafe", 
+							"Bengal Barbecue", "South Sea Traders", "The Tropical Hideaway", 
+							"Tiki Juice Bar"],
+					default = "Tiki Juice Bar"
+				)
+				rideFilter = st.multiselect(
+					"Ride:",
+					options="M",
+					default = "M"
+				)
+				utilitiesFilter = st.multiselect(
+					"Utilities:",
+					options="M",
+					default = "M"
+				)
+			with col3:
+				shopsFilter = st.multiselect(
+					"Shop:",
+					options="M",
+					default = "M"
+				)
+				shopsFilter = st.multiselect(
+					"Filter:",
+					options="M",
+					default = "M"
+				)
+				shopsFilter = st.multiselect(
+					"Filter2:",
+					options="M",
+					default = "M"
+				)
+			
+			
+			
+		
+	
+		query_results = sql_executor(defaultQ)
+		with st.expander("Results Table"):
+			query_df = pd.DataFrame(query_results)
+			st.dataframe(query_df)
+
+
+	elif choice == "SQL Console":
+		st.subheader("SQL Console")
+		st.caption("This section is designed to manipulate the entire database, any SQL operation can be executed here. Please use with caution.")
 		# Columns/Layout
 		col1,col2 = st.columns(2)
 
@@ -60,23 +147,42 @@ def main():
 					query_df = pd.DataFrame(query_results)
 					st.dataframe(query_df)
 
+	elif (choice == "Common Views"):
+		st.header("Common Views")
+		st.caption("This section has a collection of common views for easy visibility")
+		ridesBY = 'SELECT * FROM [Rides by Year]'
+		st.subheader("Rides by Year")
+		st.dataframe(pd.DataFrame(sql_executor(ridesBY)))
+		ridesBS = 'SELECT * FROM [Rides by Section]'
+		st.subheader("Rides by Section")
+		st.dataframe(pd.DataFrame(sql_executor(ridesBS)))
+
+
+
 	elif (choice == "Add Record"):
 		st.subheader("Add Record")
+		st.caption("In this section you can add records to the bottom tiers of the database")
 		with st.expander("Add Ride"):
 			with st.form(key='AddRide', clear_on_submit=True):
 				addRideID = st.number_input("rideID", step=0)
 				addRideSecID = st.number_input("sectionID", step=0)
 				addRideName = st.text_input("Ride Name")
 				addRidetype = st.text_input("Ride Type")
-				addRideName = st.number_input("Ride Minimum Height")
-				addRideName = st.number_input("Ride Opening Year", step=0)
-				addRideName = st.number_input("Wait Time")
+				addRideDesc = st.text_input("Ride Description")
+				addMinHeight = st.number_input("Ride Minimum Height")
+				addAvgAge = st.number_input("Ride Opening Year", step=0)
+				addRideOpeningYear = st.number_input("Wait Time")
+				
 				submitAddRide = st.form_submit_button(label='Add Ride')
 
 			if submitAddRide:
 				
-				## SQL SHIT HERE
-
+				query = '''INSERT INTO Rides(rideId, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+				VALUES(?,?,?,?,?,?,?,?)
+					'''
+				newRide = (addRideID, addRideSecID, addRideName, addRidetype, addRideDesc, addMinHeight, addAvgAge, addRideOpeningYear)
+				c.execute(query, newRide)
+				c.commit()
 				st.success("You have added a ride")
 		with st.expander("Add Utility"):
 			with st.form(key='AddUtility', clear_on_submit=True):
@@ -113,6 +219,7 @@ def main():
 
 	elif (choice == "Delete Record"):
 		st.subheader("Delete Record")
+		st.caption("In this section you can delete records from the bottom tiers of the database")
 		with st.expander("Delete Ride"):
 			with st.form(key = 'DeleteRide', clear_on_submit=True):
 				delRideID = st.number_input("rideID", step = 0)
@@ -141,6 +248,8 @@ def main():
 					st.success("Ride Deleted")
 
 	elif (choice == "Edit Record"):
+		st.subheader("Edit Records")
+		st.caption("In this section you can edit records from the bottom tiers of the database")
 		with st.expander("Edit Ride"):
 			with st.form(key='EditRide', clear_on_submit=True):
 				editRideID = st.number_input("rideID", step=0)
@@ -195,6 +304,11 @@ def main():
 
 	elif (choice == "Version Control"):
 		st.subheader("Undo")
+		if(st.button('Undo Previous Action')):
+			rbq = 'ROLLBACK'
+			c.execute(rbq)
+		st.subheader("Return to Default")
+			#will load a savepoint here
 
 
 
