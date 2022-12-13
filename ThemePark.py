@@ -202,7 +202,7 @@ def main():
 					newUtil = (addUtilityID, addUtilitySecID, addUtilityName, addUtilityDescription, addUtilityAvailable)
 					c.execute(utilQuery, newUtil)
 					conn.commit()
-					st.success("You have added a ride")
+					st.success("You have added a utility")
 
 		with st.expander("Add Restaurant"):
 			with st.form(key='AddRestaurant', clear_on_submit=True):
