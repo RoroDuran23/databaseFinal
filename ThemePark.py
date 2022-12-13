@@ -170,19 +170,19 @@ def main():
 				addRidetype = st.text_input("Ride Type")
 				addRideDesc = st.text_input("Ride Description")
 				addMinHeight = st.number_input("Ride Minimum Height")
-				addAvgAge = st.number_input("Ride Opening Year", step=0)
-				addRideOpeningYear = st.number_input("Wait Time")
+				addRideOpeningYear = st.number_input("Opening year")
+				waitTime = st.number_input("Wait Time")
 				
 				submitAddRide = st.form_submit_button(label='Add Ride')
 
 			if submitAddRide:
 				
-				query = '''INSERT INTO Rides(rideId, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideAvgAge, rideOpeningYear, waitTime)
+				query = '''INSERT INTO Rides(rideId, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideOpeningYear, waitTime)
 				VALUES(?,?,?,?,?,?,?,?)
 					'''
-				newRide = (addRideID, addRideSecID, addRideName, addRidetype, addRideDesc, addMinHeight, addAvgAge, addRideOpeningYear)
+				newRide = (addRideID, addRideSecID, addRideName, addRidetype, addRideDesc, addMinHeight, addRideOpeningYear, waitTime )
 				c.execute(query, newRide)
-				c.commit()
+				conn.commit()
 				st.success("You have added a ride")
 		with st.expander("Add Utility"):
 			with st.form(key='AddUtility', clear_on_submit=True):
@@ -192,13 +192,17 @@ def main():
 				addUtilityDescription = st.text_input("Utility Description")
 				addUtilityAvailable = st.checkbox("Is Available")
 				
-				submitAddUtility = st.form_submit_button(label='Add Ride')
+				submitAddUtility = st.form_submit_button(label='Add Utility')
 
 				if submitAddUtility:
-
-					#SQL SHIT
-					
-					st.success("Added Utility")
+				
+					utilQuery = '''INSERT INTO Utilities(utilityID, sectionID, utilityName, description, isAvailable)
+					VALUES(?,?,?,?,?)
+						'''
+					newUtil = (addUtilityID, addUtilitySecID, addUtilityName, addUtilityDescription, addUtilityAvailable)
+					c.execute(utilQuery, newUtil)
+					conn.commit()
+					st.success("You have added a ride")
 
 		with st.expander("Add Restaurant"):
 			with st.form(key='AddRestaurant', clear_on_submit=True):
@@ -215,6 +219,12 @@ def main():
 				submitAddRest = st.form_submit_button(label='Add Ride')
 
 				if submitAddRest:
+					restQuery = '''INSERT INTO Restaurants(restID, sectionID, restName, restDescription, restTypeFood, restTypeService, isOpen, maxCapacity, waitTime)
+					VALUES(?,?,?,?,?,?,?,?,?)
+						'''
+					newRest = (addRestID, addRestSecID, addRestName, addRestDescription, addRestTypeFood,addRestTypeService,addIsOpen,addMaxCapacity,addWaitTime)
+					c.execute(restQuery, newRest)
+					conn.commit()
 					st.success("Added Restaurant")
 
 	elif (choice == "Delete Record"):
@@ -226,24 +236,36 @@ def main():
 				submitDelRide = st.form_submit_button(label='Delete Ride')
 
 				if submitDelRide:
-					# SQL SHIT HERE
+					sDelRideID = str(delRideID)
+					sql = 'DELETE FROM Rides WHERE rideID='+sDelRideID
+					cur = conn.cursor()
+					cur.execute(sql)
+					conn.commit()
 					st.success("Ride Deleted")
 		with st.expander("Delete Utility"):
 			with st.form(key = 'DeleteUtil', clear_on_submit=True):
-				delRideID = st.number_input("utilityID", step = 0)
-				submitDelRide = st.form_submit_button(label='Delete Utility')
+				delUtilID = st.number_input("utilityID", step = 0)
+				submitDelUtil = st.form_submit_button(label='Delete Utility')
 
-				if submitDelRide:
-					# SQL SHIT HERE
-					st.success("Ride Deleted")
+				if submitDelUtil:
+					sdelUtilID = str(delUtilID)
+					sql = 'DELETE FROM Utilities WHERE utilityID='+sdelUtilID
+					cur = conn.cursor()
+					cur.execute(sql)
+					conn.commit()
+					st.success("Utility Deleted")
 		with st.expander("Delete Restaurant"):
 			with st.form(key = 'DeleteRest', clear_on_submit=True):
 				delRideID = st.number_input("restID", step = 0)
-				submitDelRide = st.form_submit_button(label='Delete Restaurant')
+				submitDelRest = st.form_submit_button(label='Delete Restaurant')
 
-				if submitDelRide:
+				if submitDelRest:
 
-					# SQL SHIT HERE
+					sdelRestID = str(delRideID)
+					sql = 'DELETE FROM Restaurants WHERE restID='+sdelRestID
+					cur = conn.cursor()
+					cur.execute(sql)
+					conn.commit()
 					
 					st.success("Ride Deleted")
 
@@ -264,6 +286,7 @@ def main():
 			if submitEditRide:
 
 				## SQL SHIT HERE
+				# query = "UPDATE Rides SET rideID=" + str(editRideID) + ""
 				
 				st.success("You have edited the ride")
 
