@@ -43,11 +43,11 @@ def main():
 						INNER JOIN  Restaurants
 						ON Sections.sectionID = Restaurants.sectionID;'''
 	# ----------------------------------------------------
+
 	st.title("Disney Park Manager")
 
 	menu = ["Query","Common Views", "Add Record", "Delete Record", "Edit Record", "SQL Console", "Version Control"]
 	choice = st.sidebar.selectbox("Menu",menu)
-
 
 	
 	if choice == "Query":
@@ -56,62 +56,20 @@ def main():
 
 		# ---- FILTERING DATA -------
 		with st.expander("Filter data"):
-			col1, col2, col3 = st.columns(3)
+			col1, col2 = st.columns(2)
 			with col1:
-				parkFilter = st.multiselect(
-					"Park:",
-					options=["Disneyland", "Magic Kingdom"],
-					default = "Disneyland"
-				)
-				sectionFilter = st.multiselect(
-					"Section:",
-					options="M",
-					default = "M"
-				)
-				locationFilter = st.multiselect(
-					"Location:",
-					options="M",
-					default = "M"
+				parkFilter = st.selectbox(
+					"Filter by park:",
+					("Disneyland", "Magic Kingdom")
 				)
 			with col2:
-				restaurantFilter = st.multiselect(
-					"Restaurant:",
-					options=["Gibson Girl Ice Cream Parlor", "Jolly Holiday Bakery Cafe", 
-							"Bengal Barbecue", "South Sea Traders", "The Tropical Hideaway", 
-							"Tiki Juice Bar"],
-					default = "Tiki Juice Bar"
+				sectionFilter = st.selectbox(
+					"Filter by section:",
+					("Main Street, U.S.A.", "Adventureland", "New Orleans Square", "Frontierland", "Fantasyland", "Tomorrowland", "Critter Country", "Star Wars: Galaxys Edge", " Mickeys Toontown", "Pixar Pier")
 				)
-				rideFilter = st.multiselect(
-					"Ride:",
-					options="M",
-					default = "M"
-				)
-				utilitiesFilter = st.multiselect(
-					"Utilities:",
-					options="M",
-					default = "M"
-				)
-			with col3:
-				shopsFilter = st.multiselect(
-					"Shop:",
-					options="M",
-					default = "M"
-				)
-				shopsFilter = st.multiselect(
-					"Filter:",
-					options="M",
-					default = "M"
-				)
-				shopsFilter = st.multiselect(
-					"Filter2:",
-					options="M",
-					default = "M"
-				)
-			
 			
 			
 		
-	
 		query_results = sql_executor(defaultQ)
 		with st.expander("Results Table"):
 			query_df = pd.DataFrame(query_results)
@@ -202,7 +160,7 @@ def main():
 					newUtil = (addUtilityID, addUtilitySecID, addUtilityName, addUtilityDescription, addUtilityAvailable)
 					c.execute(utilQuery, newUtil)
 					conn.commit()
-					st.success("You have added a utility")
+					st.success("You have added a ride")
 
 		with st.expander("Add Restaurant"):
 			with st.form(key='AddRestaurant', clear_on_submit=True):
@@ -278,16 +236,29 @@ def main():
 				editRideSecID = st.number_input("sectionID", step=0)
 				editRideName = st.text_input("Ride Name")
 				editRidetype = st.text_input("Ride Type")
-				editRideName = st.number_input("Ride Minimum Height")
-				editRideName = st.number_input("Ride Opening Year", step=0)
-				editRideName = st.number_input("Wait Time")
+				editRideDesc = st.text_input("Ride Description")
+				editRideMinHeight = st.number_input("Ride Minimum Height")
+				editRideOpeningYear = st.number_input("Ride Opening Year", step=0)
+				editRideWaitTime = st.number_input("Wait Time")
 				submitEditRide = st.form_submit_button(label='Edit Ride')
 
 			if submitEditRide:
 
-				## SQL SHIT HERE
-				# query = "UPDATE Rides SET rideID=" + str(editRideID) + ""
 				
+				# sql = "UPDATE Rides SET sectionID="+str(editRideSecID)+",rideName="+editRideName+", rideType="+editRidetype+", rideDescription="+editRideDesc+", rideMinHeight="+str(editRideMinHeight)+", rideOpeningYear="+str(editRideOpeningYear)+", waitTime="+str(editRideWaitTime)+"WHERE rideID="+str(editRideID)
+				sql = '''UPDATE Rides 
+						SET sectionID = ? , 
+						rideName = ? , 
+						rideType = ? , 
+						rideDescription = ? , 
+						rideMinHeight = ? , 
+						rideOpeningYear = ? , 
+						waitTime = ? , 
+						WHERE rideID = ?'''
+				task = (str(editRideSecID),editRideName,editRidetype,editRideDesc,str(editRideMinHeight),str(editRideOpeningYear),str(editRideWaitTime),str(editRideID))
+				cur = conn.cursor()
+				cur.execute(sql, task)
+				conn.commit()
 				st.success("You have edited the ride")
 
 		with st.expander("Edit Utility"):
