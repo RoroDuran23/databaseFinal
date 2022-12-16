@@ -37,11 +37,20 @@ run = False # will run query based on our filters
 
 def main():
 	# -------- DEFAULT QUERY FOR MAIN TABLE --------------
-	defaultQ = '''SELECT restName, restTypeFood, parkName, maxCapacity, restDescription, waitTime FROM Parks
-						INNER JOIN Sections
-						ON Parks.locationID = Sections.sectionID
-						INNER JOIN  Restaurants
-						ON Sections.sectionID = Restaurants.sectionID;'''
+	# defaultQ = '''SELECT restName, restTypeFood, parkName, maxCapacity, restDescription, waitTime FROM Parks
+	# 					INNER JOIN Sections
+	# 					ON Parks.locationID = Sections.sectionID
+	# 					INNER JOIN  Restaurants
+	# 					ON Sections.sectionID = Restaurants.sectionID;'''
+
+	defaultQ = '''SELECT Rides.rideID, Rides.rideName, Sections.sectionName, Parks.parkName, Location.locationName FROM Location
+						INNER JOIN Parks
+						ON Location.locationID = Parks.locationID
+						INNER JOIN  Sections
+						ON Parks.parkID = Sections.parkID
+						INNER JOIN  Rides
+						ON Sections.sectionID = Rides.sectionID;'''
+
 	# ----------------------------------------------------
 
 	st.title("Disney Park Manager")
