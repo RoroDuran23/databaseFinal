@@ -102,18 +102,36 @@ def main():
 		st.dataframe(structureDF)
 
 		st.subheader("Amenity Search")
-		st.caption("Use the above to find the desired section")
-		sid = st.number_input("Enter Section ID", step=1)
+		col1, col2= st.columns(2)
+		with col1:
+			searchSelect = st.selectbox("Choose your filter:",
+				("Location", "Park", "Section"))
+		with col2:
+			searchID = st.number_input("Enter Search ID", step=1)
 		
-		#with col2:
-			
+		searchClause = '''WHERE '''+searchSelect+'''ID='''+str(searchID)
+
+		with st.expander("Rides"):
+			ridesCode = '''SELECT * FROM [Full Rides Path] ''' + searchClause
+			ridesDF = pd.DataFrame(sql_executor(ridesCode))
+			st.dataframe(ridesDF)
+
+		with st.expander("Restaurants"):
+			restCode = '''SELECT * FROM [Full Restaurant Path] ''' + searchClause
+			restDF = pd.DataFrame(sql_executor(restCode))
+			st.dataframe(restDF)
+
+		with st.expander("Utilities"):
+			utilCode = '''SELECT * FROM [Full Utilities Path] ''' + searchClause
+			utilDF = pd.DataFrame(sql_executor(utilCode))
+			st.dataframe(utilDF)
+
+		with st.expander("Shops"):
+			shopCode = '''SELECT * FROM [Full Shops Path] ''' + searchClause
+			shopDF = pd.DataFrame(sql_executor(shopCode))
+			st.dataframe(shopDF)
 
 		query_results = sql_executor(defaultQ)
-
-		with st.expander("Results Table"):
-			query_df = pd.DataFrame(query_results)
-			query_df.columns = ["rideName", "sectionName", "parkName", "locationName"]
-			st.dataframe(query_df)
 
 
 	elif choice == "SQL Console":

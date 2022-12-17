@@ -118,6 +118,19 @@ SELECT Location.locationID, locationName, P.parkID, parkName, S.sectionID, secti
 FROM Location LEFT JOIN Parks P on Location.locationID = P.locationID LEFT JOIN Sections S on P.parkID = S.parkID;]
 
 DROP VIEW [LocationMap];
+
+CREATE VIEW [Full Rides Path] AS
+SELECT * FROM [LocationMap] LEFT JOIN Rides R on LocationMap.sectionID = R.sectionID;
+
+CREATE VIEW [Full Restaurant Path] AS
+SELECT * FROM [LocationMap] LEFT JOIN Restaurants R on LocationMap.sectionID = R.sectionID;
+
+CREATE VIEW [Full Utilities Path] AS
+SELECT * FROM [LocationMap] LEFT JOIN Utilities U on LocationMap.sectionID = U.sectionID;
+
+CREATE VIEW [Full Shops Path] AS
+SELECT * FROM [LocationMap] LEFT JOIN Shops S on LocationMap.sectionID = S.sectionID;
+
 -- Sort open shops by price
 SELECT shopName, avgPrice, minPrice, maxPrice
 FROM Shops
