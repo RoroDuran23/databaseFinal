@@ -113,11 +113,18 @@ ORDER BY parkName, sectionName;
 
 DROP VIEW [Rides by Section];
 
+CREATE VIEW [LocationMap] AS
+SELECT Location.locationID, locationName, P.parkID, parkName, S.sectionID, sectionName
+FROM Location LEFT JOIN Parks P on Location.locationID = P.locationID LEFT JOIN Sections S on P.parkID = S.parkID;]
+
+DROP VIEW [LocationMap];
 -- Sort open shops by price
 SELECT shopName, avgPrice, minPrice, maxPrice
 FROM Shops
 WHERE isOpen = 1
 ORDER BY avgPrice ASC;
+
+
 
 
 -- Add records

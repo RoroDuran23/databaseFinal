@@ -52,6 +52,8 @@ def main():
 						INNER JOIN  Rides
 						ON Sections.sectionID = Rides.sectionID;'''
 
+	
+
 	# ----------------------------------------------------
 
 	st.title("Disney Park Manager")
@@ -61,26 +63,53 @@ def main():
 
 	
 	if choice == "Query":
-		st.subheader("Searching by Filters")
-		st.caption("This page is meant for easily navigating through the whole database using filters and straightforward options")
+		st.caption("This page is meant for easily navigating through the whole database using filters")
 
 		# ---- FILTERING DATA -------
-		with st.expander("Filter data"):
-			col1, col2 = st.columns(2)
-			with col1:
-				parkFilter = st.selectbox(
-					"Filter by park:",
-					("Disneyland", "Magic Kingdom")
-				)
-			with col2:
-				sectionFilter = st.selectbox(
-					"Filter by section:",
-					("Main Street, U.S.A.", "Adventureland", "New Orleans Square", "Frontierland", "Fantasyland", "Tomorrowland", "Critter Country", "Star Wars: Galaxys Edge", " Mickeys Toontown", "Pixar Pier")
-				)
-			
-			
+		#with st.expander("Filter data"):
+		#	col1, col2 = st.columns(2)
+		#	with col1:
+		#		parkFilter = st.selectbox(
+		#			"Filter by park:",
+		#			("Disneyland", "Magic Kingdom")
+		#		)
+		#	with col2:
+		#		sectionFilter = st.selectbox(
+		#			"Filter by section:",
+		#			("Main Street, U.S.A.", "Adventureland", "New Orleans Square", "Frontierland", "Fantasyland", "Tomorrowland", "Critter Country", "Star Wars: Galaxys Edge", " Mickeys Toontown", "Pixar Pier")
+		#		)
 		
+		st.subheader("Park Structure Navigation")
+		colA, colB = st.columns(2)
+		with colA:
+			structSelect = st.selectbox(
+				"Choose your filter:",
+				("Default", "Location", "Park", "Section")
+			)
+		with colB:
+			structID = st.number_input("Enter ID", step=1)
+		
+		structCode = '''SELECT * FROM [LocationMap]'''
+		if structSelect == "Location":
+			structCode = '''SELECT * FROM [LocationMap] WHERE locationID ='''+str(structID)
+		elif structSelect == "Park":
+			structCode = '''SELECT * FROM [LocationMap] WHERE parkID ='''+str(structID)
+		elif structSelect == "Section":
+			structCode = '''SELECT * FROM [LocationMap] WHERE sectionID ='''+str(structID)
+		structureResults = sql_executor(structCode)
+		structureDF = pd.DataFrame(structureResults)
+		structureDF.columns = ["Location ID", "Location Name", "Park ID", "Park Name", "Section ID", "Section Name"]
+		st.dataframe(structureDF)
+
+		st.subheader("Amenity Search")
+		st.caption("Use the above to find the desired section")
+		sid = st.number_input("Enter Section ID", step=1)
+		
+		#with col2:
+			
+
 		query_results = sql_executor(defaultQ)
+
 		with st.expander("Results Table"):
 			query_df = pd.DataFrame(query_results)
 			query_df.columns = ["rideName", "sectionName", "parkName", "locationName"]
