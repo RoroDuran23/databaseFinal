@@ -58,11 +58,11 @@ def main():
 
 	st.title("Disney Park Manager")
 
-	menu = ["Query","Common Views", "Add Record", "Delete Record", "Edit Record", "SQL Console", "Version Control"]
+	menu = ["Navigation","Common Views", "Add Record", "Delete Record", "Edit Record", "SQL Console"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
 	
-	if choice == "Query":
+	if choice == "Navigation":
 		st.caption("This page is meant for easily navigating through the whole database using filters")
 
 		# ---- FILTERING DATA -------
@@ -358,13 +358,6 @@ def main():
 					## SQL SHIT HERE
 
 					st.success("Added Restaurant")
-
-	elif (choice == "Version Control"):
-		st.subheader("Undo")
-		if(st.button('Undo Previous Action')):
-			conn.rollback()
-		st.subheader("Return to Default")
-			#will load a savepoint here
 
 
 
