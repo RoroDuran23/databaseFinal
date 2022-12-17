@@ -357,8 +357,7 @@ def main():
 	elif (choice == "Version Control"):
 		st.subheader("Undo")
 		if(st.button('Undo Previous Action')):
-			rbq = 'ROLLBACK'
-			c.execute(rbq)
+			conn.rollback()
 		st.subheader("Return to Default")
 			#will load a savepoint here
 
