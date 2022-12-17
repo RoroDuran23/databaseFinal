@@ -192,14 +192,19 @@ def main():
 				submitAddRide = st.form_submit_button(label='Add Ride')
 
 			if submitAddRide:
-				
-				query = '''INSERT INTO Rides(rideId, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideOpeningYear, waitTime)
-				VALUES(?,?,?,?,?,?,?,?)
-					'''
-				newRide = (addRideID, addRideSecID, addRideName, addRidetype, addRideDesc, addMinHeight, addRideOpeningYear, waitTime )
-				c.execute(query, newRide)
-				conn.commit()
-				st.success("You have added a ride")
+			##ROLLBACK EXAMPLE !!! could implement everywhere but probably never gunna get tripped anyway
+				try:
+					query = '''INSERT INTO Rides(rideId, sectionID, rideName, rideType, rideDescription, rideMinHeight, rideOpeningYear, waitTime)
+					VALUES(?,?,?,?,?,?,?,?)
+						'''
+					newRide = (addRideID, addRideSecID, addRideName, addRidetype, addRideDesc, addMinHeight, addRideOpeningYear, waitTime )
+					c.execute(query, newRide)
+					conn.commit()
+
+				except conn.Error as error:
+					conn.rollback()
+
+				st.success("Function Sent")
 		with st.expander("Add Utility"):
 			with st.form(key='AddUtility', clear_on_submit=True):
 				addUtilityID = st.number_input("Utility ID", step=0)
