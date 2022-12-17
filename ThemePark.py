@@ -1,4 +1,5 @@
 # Core Pkgs
+from pickle import FALSE
 from re import X
 from select import select
 import streamlit as st 
@@ -43,7 +44,7 @@ def main():
 	# 					INNER JOIN  Restaurants
 	# 					ON Sections.sectionID = Restaurants.sectionID;'''
 
-	defaultQ = '''SELECT Rides.rideID, Rides.rideName, Sections.sectionName, Parks.parkName, Location.locationName FROM Location
+	defaultQ = '''SELECT Rides.rideName, Sections.sectionName, Parks.parkName, Location.locationName FROM Location
 						INNER JOIN Parks
 						ON Location.locationID = Parks.locationID
 						INNER JOIN  Sections
@@ -82,6 +83,7 @@ def main():
 		query_results = sql_executor(defaultQ)
 		with st.expander("Results Table"):
 			query_df = pd.DataFrame(query_results)
+			query_df.columns = ["rideName", "sectionName", "parkName", "locationName"]
 			st.dataframe(query_df)
 
 
