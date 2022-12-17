@@ -372,5 +372,8 @@ WHERE Restaurants.restID = 14;
 --10. Enforce referential integrality (PK/FK Constraints)
 
 --11. Include Database Views, Indexes
+CREATE INDEX utilIndex ON Utilities(utilityName, description);
+CREATE INDEX restIndex ON Restaurants(restName, restDescription, restTypeFood, restTypeService, maxCapacity, waitTime);
+CREATE INDEX shopsIndex ON Shops(shopType, shopName, maxPrice, minPrice, avgPrice, numItems);
 
 --12. Use at least 5 entities
