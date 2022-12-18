@@ -41,7 +41,6 @@ CREATE TABLE Restaurants (
     restTypeService VARCHAR(100),
     isOpen BIT,
     maxCapacity INT,
-    isFull BIT,
     waitTime TIME,
 
     PRIMARY KEY (restID),

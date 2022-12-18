@@ -1,3 +1,9 @@
+#Matthew Graham
+#Pablo Labbate
+#Rodrigo Duran
+
+#Basic Template was used from a tutorial video for SQL setup, rest of the pages were all us baby
+
 # Core Pkgs
 from itertools import groupby
 from pickle import FALSE
@@ -23,7 +29,7 @@ def sql_executor(raw_code):
 
 
 
-st.set_page_config(page_title="Disney Dashboard",
+st.set_page_config(page_title="Theme Park Manager",
                     layout="wide")
 
 ##city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
@@ -57,29 +63,16 @@ def main():
 
 	# ----------------------------------------------------
 
-	st.title("Disney Park Manager")
+	st.title("Theme Park Management")
 
 	menu = ["Navigation","Common Views", "Add Record", "Delete Record", "Edit Record", "SQL Console"]
 	choice = st.sidebar.selectbox("Menu",menu)
 
-	
 	if choice == "Navigation":
 		st.caption("This page is meant for easily navigating through the whole database using filters")
 
-		# ---- FILTERING DATA -------
-		#with st.expander("Filter data"):
-		#	col1, col2 = st.columns(2)
-		#	with col1:
-		#		parkFilter = st.selectbox(
-		#			"Filter by park:",
-		#			("Disneyland", "Magic Kingdom")
-		#		)
-		#	with col2:
-		#		sectionFilter = st.selectbox(
-		#			"Filter by section:",
-		#			("Main Street, U.S.A.", "Adventureland", "New Orleans Square", "Frontierland", "Fantasyland", "Tomorrowland", "Critter Country", "Star Wars: Galaxys Edge", " Mickeys Toontown", "Pixar Pier")
-		#		)
-		
+		#Navigate through the structure of the park location
+
 		st.subheader("Park Structure Navigation")
 		colA, colB = st.columns(2)
 		with colA:
@@ -99,42 +92,51 @@ def main():
 			structCode = '''SELECT * FROM [LocationMap] WHERE sectionID ='''+str(structID)
 		structureResults = sql_executor(structCode)
 		structureDF = pd.DataFrame(structureResults)
-		structureDF.columns = ["Location ID", "Location Name", "Park ID", "Park Name", "Section ID", "Section Name"]
+		mapColumns = ["Location ID", "Location Name", "Park ID", "Park Name", "Section ID", "Section Name"]
+		structureDF.columns = mapColumns
 		st.dataframe(structureDF)
 
+
+
+	# Search through the amenities by any location based primary key
 		st.subheader("Amenity Search")
 		col1, col2= st.columns(2)
 		with col1:
 			searchSelect = st.selectbox("Choose your filter:",
 				("Location", "Park", "Section"))
 		with col2:
-			searchID = st.number_input("Enter Search ID", step=1)
+			searchID = st.number_input("Enter Search ID", step=1, value=1)
 		
 		searchClause = '''WHERE '''+searchSelect+'''ID='''+str(searchID)
 
 		with st.expander("Rides"):
 			ridesCode = '''SELECT * FROM [Full Rides Path] ''' + searchClause
 			ridesDF = pd.DataFrame(sql_executor(ridesCode))
+			ridesDF.columns = mapColumns + ["RideID", "SectionID", "Ride Name", "Ride Type", "Ride Description", "Ride Min Height", "Ride Opening Year", "Ride Wait Time"]
 			st.dataframe(ridesDF)
 
 		with st.expander("Restaurants"):
 			restCode = '''SELECT * FROM [Full Restaurant Path] ''' + searchClause
 			restDF = pd.DataFrame(sql_executor(restCode))
+			restDF.columns = mapColumns + ["Restaurant ID", "SectionID", "Name", "Description", "Type of Food", "Type of Service", "Open", "Max Capacity", "Wait Time"]
 			st.dataframe(restDF)
 
 		with st.expander("Utilities"):
 			utilCode = '''SELECT * FROM [Full Utilities Path] ''' + searchClause
 			utilDF = pd.DataFrame(sql_executor(utilCode))
+			utilDF.columns = mapColumns + ["Utility ID","SectionID","Name", "Description", "Available"]
 			st.dataframe(utilDF)
 
 		with st.expander("Shops"):
 			shopCode = '''SELECT * FROM [Full Shops Path] ''' + searchClause
 			shopDF = pd.DataFrame(sql_executor(shopCode))
+			shopDF.columns = mapColumns + ["Shop ID", "SectionID", "Type", "Name", "Maximum Price", "Minimum Price", "Average Price", "Number of Items", "Is Open"]
 			st.dataframe(shopDF)
 
 		query_results = sql_executor(defaultQ)
 
 
+	#This is the SQL Console, Largely derived from a tutorial video I found. Mainly was made to interact early in the program but no reason to cut it
 	elif choice == "SQL Console":
 		st.subheader("SQL Console")
 		st.caption("This section is designed to manipulate the entire database, any SQL operation can be executed here. Please use with caution.")
@@ -167,23 +169,31 @@ def main():
 #new new
 	elif (choice == "Common Views"):
 		st.header("Common Views")
+
+		# Rides by year view
 		st.caption("This section has a collection of common views for easy visibility")
 		ridesBY = 'SELECT * FROM [Rides by Year]'
 		st.subheader("Rides by Year")
 		ridesBYdf = pd.DataFrame(sql_executor(ridesBY))
 		ridesBYdf.columns = ["rideName", "rideType", "rideOpeningYear"]
 		st.dataframe(ridesBYdf)
+
+		# Rides by section View
 		ridesBS = 'SELECT * FROM [Rides by Section]'
 		st.subheader("Rides by Section")
 		ridesBSdf = pd.DataFrame(sql_executor(ridesBS))
 		ridesBSdf.columns = ["rideName", "rideType", "sectionName", "parkName"]
 		st.dataframe(ridesBSdf)
-		#new new
-		ridesSubQ = 'SELECT parkName,(SELECT avg(rideOpeningYear) FROM Rides WHERE parkID = 1) AS AvgOpenYear FROM Parks WHERE parkID = 1'
-		st.subheader("Average year...")
+
+
+		#Aggregation / Subquery
+		ridesSubQ = 'SELECT parkName,(SELECT avg(rideOpeningYear) FROM Rides WHERE parkID = 1 AND (rideOpeningYear > 1950)) AS AvgOpenYear FROM Parks WHERE parkID = 1'
+		st.subheader("Average Opening Year for Disneyland Rides")
 		subQdf = pd.DataFrame(sql_executor(ridesSubQ))
 		subQdf.columns = ["parkName", "AvgOpenYear"]
 		st.dataframe(subQdf)
+
+		
 		restosGroupBy = 'SELECT sectionID, COUNT(restName) AS NumRestaurants FROM Restaurants GROUP BY sectionID;'
 		st.subheader("Group By Number of Restaurants per Section")
 		groupByDF = pd.DataFrame(sql_executor(restosGroupBy))
@@ -193,10 +203,10 @@ def main():
 
 
 
-
+	#Adding Records
 	elif (choice == "Add Record"):
 		st.subheader("Add Record")
-		st.caption("In this section you can add records to the bottom tiers of the database")
+		st.caption("In this section you can add records to the amenities of the database")
 		with st.expander("Add Ride"):
 			with st.form(key='AddRide', clear_on_submit=True):
 				addRideID = st.number_input("rideID", step=0)
@@ -242,7 +252,7 @@ def main():
 					newUtil = (addUtilityID, addUtilitySecID, addUtilityName, addUtilityDescription, addUtilityAvailable)
 					c.execute(utilQuery, newUtil)
 					conn.commit()
-					st.success("You have added a ride")
+					st.success("You have added a utility")
 
 		with st.expander("Add Restaurant"):
 			with st.form(key='AddRestaurant', clear_on_submit=True):
@@ -255,8 +265,9 @@ def main():
 				addIsOpen = st.checkbox("Is Open")
 				addMaxCapacity = st.number_input("Maximum Capacity", step = 0)
 				addWaitTime = st.number_input("Wait Time")
-				## SQL SHIT HERE
-				submitAddRest = st.form_submit_button(label='Add Ride')
+				
+
+				submitAddRest = st.form_submit_button(label='Add Restaurant')
 
 				if submitAddRest:
 					restQuery = '''INSERT INTO Restaurants(restID, sectionID, restName, restDescription, restTypeFood, restTypeService, isOpen, maxCapacity, waitTime)
@@ -267,9 +278,11 @@ def main():
 					conn.commit()
 					st.success("Added Restaurant")
 
+
+	#Deleting Records
 	elif (choice == "Delete Record"):
 		st.subheader("Delete Record")
-		st.caption("In this section you can delete records from the bottom tiers of the database")
+		st.caption("In this section you can delete records from the amenities of the database")
 		with st.expander("Delete Ride"):
 			with st.form(key = 'DeleteRide', clear_on_submit=True):
 				delRideID = st.number_input("rideID", step = 0)
@@ -307,11 +320,12 @@ def main():
 					cur.execute(sql)
 					conn.commit()
 					
-					st.success("Ride Deleted")
+					st.success("Restaurant Deleted")
 
+	#Editing Records
 	elif (choice == "Edit Record"):
 		st.subheader("Edit Records")
-		st.caption("In this section you can edit records from the bottom tiers of the database")
+		st.caption("In this section you can edit records from the amenities of the database")
 		with st.expander("Edit Ride"):
 			with st.form(key='EditRide', clear_on_submit=True):
 				editRideID = st.number_input("rideID", step=0)
@@ -323,7 +337,7 @@ def main():
 				editRideOpeningYear = st.number_input("Ride Opening Year", step=0)
 				editRideWaitTime = st.number_input("Wait Time")
 				submitEditRide = st.form_submit_button(label='Edit Ride')
-
+				
 			if submitEditRide:
 
 				
@@ -335,11 +349,12 @@ def main():
 						rideDescription = ? , 
 						rideMinHeight = ? , 
 						rideOpeningYear = ? , 
-						waitTime = ? , 
+						waitTime = ?
 						WHERE rideID = ?'''
+				
 				task = (str(editRideSecID),editRideName,editRidetype,editRideDesc,str(editRideMinHeight),str(editRideOpeningYear),str(editRideWaitTime),str(editRideID))
 				cur = conn.cursor()
-				cur.execute(sql, task)
+				cur.execute(sql,task)
 				conn.commit()
 				st.success("You have edited the ride")
 
@@ -353,8 +368,24 @@ def main():
 				
 				submitEditUtility = st.form_submit_button(label='Edit Utility')
 
+				if editUtilityAvailable:
+					avail = "1"
+				else:
+					avail = "0"
+
 				if submitEditUtility:
-					#SQL SHIT
+					sql = '''UPDATE Utilities 
+						SET sectionID = ? , 
+						utilityName = ? , 
+						description = ? , 
+						isAvailable = ? 
+						WHERE utilityID = ?'''
+
+					task = (str(editUtilitySecID),editUtilityName,editUtilityDescription,avail,str(editUtilityID))
+					cur = conn.cursor()
+					cur.execute(sql,task)
+					conn.commit()
+				
 					st.success("You have Edited Utility")
 
 		with st.expander("Edit Restaurant"):
@@ -371,12 +402,29 @@ def main():
 				editWaitTime = st.number_input("Wait Time")
 				
 				submitEditRest = st.form_submit_button(label='Edit Restaurant')
-
+				if(editIsOpen):
+					open = 1
+				else:
+					open = 0
 				if submitEditRest:
 
-					## SQL SHIT HERE
+					
+					sql = '''UPDATE Restaurants 
+						SET sectionID = ? , 
+						restName = ? , 
+						restDescription = ? , 
+						restTypeFood = ? ,
+						restTypeService = ? ,
+						isOpen = ? , 
+						maxCapacity = ?,
+						waitTime = ?
+						WHERE restID = ?'''
 
-					st.success("Added Restaurant")
+					task = (str(editRestSecID),editRestName, editRestDescription, editRestTypeFood, editRestTypeService, str(open),str(editMaxCapacity),str(editWaitTime),str(editRestID))
+					cur = conn.cursor()
+					cur.execute(sql,task)
+					conn.commit()
+					st.success("Edited Restaurant")
 
 
 
