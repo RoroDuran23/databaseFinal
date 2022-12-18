@@ -1,4 +1,5 @@
 # Core Pkgs
+from itertools import groupby
 from pickle import FALSE
 from re import X
 from select import select
@@ -163,15 +164,33 @@ def main():
 					query_df = pd.DataFrame(query_results)
 					st.dataframe(query_df)
 
+#new new
 	elif (choice == "Common Views"):
 		st.header("Common Views")
 		st.caption("This section has a collection of common views for easy visibility")
 		ridesBY = 'SELECT * FROM [Rides by Year]'
 		st.subheader("Rides by Year")
-		st.dataframe(pd.DataFrame(sql_executor(ridesBY)))
+		ridesBYdf = pd.DataFrame(sql_executor(ridesBY))
+		ridesBYdf.columns = ["rideName", "rideType", "rideOpeningYear"]
+		st.dataframe(ridesBYdf)
 		ridesBS = 'SELECT * FROM [Rides by Section]'
 		st.subheader("Rides by Section")
-		st.dataframe(pd.DataFrame(sql_executor(ridesBS)))
+		ridesBSdf = pd.DataFrame(sql_executor(ridesBS))
+		ridesBSdf.columns = ["rideName", "rideType", "sectionName", "parkName"]
+		st.dataframe(ridesBSdf)
+		#new new
+		ridesSubQ = 'SELECT parkName,(SELECT avg(rideOpeningYear) FROM Rides WHERE parkID = 1) AS AvgOpenYear FROM Parks WHERE parkID = 1'
+		st.subheader("Average year...")
+		subQdf = pd.DataFrame(sql_executor(ridesSubQ))
+		subQdf.columns = ["parkName", "AvgOpenYear"]
+		st.dataframe(subQdf)
+		restosGroupBy = 'SELECT sectionID, COUNT(restName) AS NumRestaurants FROM Restaurants GROUP BY sectionID;'
+		st.subheader("Group By Number of Restaurants per Section")
+		groupByDF = pd.DataFrame(sql_executor(restosGroupBy))
+		groupByDF.columns = ["sectionID", "NumRestaurants"]
+		st.dataframe(groupByDF)
+
+
 
 
 
