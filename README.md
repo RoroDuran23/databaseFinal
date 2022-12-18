@@ -4,6 +4,8 @@
 This repo contains all the files used to create our database project.
 
 * finalDraft.sql handles all the back-end program
+* ThemePark.py handles all the front-end program
+* disney2.sqlite it is where all of our data is stored
 
 
 ## Identifying Information
