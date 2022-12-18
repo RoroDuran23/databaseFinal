@@ -95,6 +95,7 @@ def main():
 		mapColumns = ["Location ID", "Location Name", "Park ID", "Park Name", "Section ID", "Section Name"]
 		structureDF.columns = mapColumns
 		st.dataframe(structureDF)
+		st.download_button("Download as CSV", structureDF.to_csv(), mime = 'text/csv')
 
 
 
