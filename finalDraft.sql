@@ -384,10 +384,23 @@ WHERE Restaurants.restID = 14;
 --6. Make use of transactions (commit and rollback)
 
 --7. One query must perform an aggregation/group-by clause
+SELECT sectionID, COUNT(restName) AS NumRestaurants
+FROM Restaurants
+GROUP BY sectionID;
 
 --8. One query must contain a sub-query
+SELECT parkName,
+       (SELECT avg(rideOpeningYear) FROM Rides WHERE parkID = 1) AS AvgOpenYear
+       FROM Parks WHERE parkID = 1;
 
 --9. Two queries must involve joins across at least 3 tables
+SELECT * FROM Parks
+INNER JOIN Location L on L.locationID = Parks.locationID
+INNER JOIN Sections S on Parks.parkID = S.parkID;
+
+SELECT * FROM Restaurants
+INNER JOIN Sections S on S.sectionID = Restaurants.sectionID
+INNER JOIN Parks P on P.parkID = S.parkID;
 
 --10. Enforce referential integrality (PK/FK Constraints)
 
