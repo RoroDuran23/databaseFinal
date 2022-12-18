@@ -115,24 +115,28 @@ def main():
 			ridesDF = pd.DataFrame(sql_executor(ridesCode))
 			ridesDF.columns = mapColumns + ["RideID", "SectionID", "Ride Name", "Ride Type", "Ride Description", "Ride Min Height", "Ride Opening Year", "Ride Wait Time"]
 			st.dataframe(ridesDF)
+			st.download_button("Download as CSV", ridesDF.to_csv(), mime = 'text/csv')
 
 		with st.expander("Restaurants"):
 			restCode = '''SELECT * FROM [Full Restaurant Path] ''' + searchClause
 			restDF = pd.DataFrame(sql_executor(restCode))
 			restDF.columns = mapColumns + ["Restaurant ID", "SectionID", "Name", "Description", "Type of Food", "Type of Service", "Open", "Max Capacity", "Wait Time"]
 			st.dataframe(restDF)
+			st.download_button("Download as CSV", restDF.to_csv(), mime = 'text/csv')
 
 		with st.expander("Utilities"):
 			utilCode = '''SELECT * FROM [Full Utilities Path] ''' + searchClause
 			utilDF = pd.DataFrame(sql_executor(utilCode))
 			utilDF.columns = mapColumns + ["Utility ID","SectionID","Name", "Description", "Available"]
 			st.dataframe(utilDF)
+			st.download_button("Download as CSV", utilDF.to_csv(), mime = 'text/csv')
 
 		with st.expander("Shops"):
 			shopCode = '''SELECT * FROM [Full Shops Path] ''' + searchClause
 			shopDF = pd.DataFrame(sql_executor(shopCode))
 			shopDF.columns = mapColumns + ["Shop ID", "SectionID", "Type", "Name", "Maximum Price", "Minimum Price", "Average Price", "Number of Items", "Is Open"]
 			st.dataframe(shopDF)
+			st.download_button("Download as CSV", shopDF.to_csv(), mime = 'text/csv')
 
 		query_results = sql_executor(defaultQ)
 
