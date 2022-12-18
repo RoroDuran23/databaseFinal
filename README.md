@@ -46,6 +46,7 @@ This repo contains all the files used to create our database project.
 * https://docs.streamlit.io/library/get-started/installation
 * https://www.youtube.com/watch?v=ns-Pd-1F4uU
 * https://www.plus2net.com/python/tkinter-mysql.php
+* https://www.youtube.com/watch?v=eJWHFJSjD9E
 
 ## Known Errors
 
